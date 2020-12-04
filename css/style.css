@@ -1,0 +1,11 @@
+* {
+  font-family: "Verdana";
+  font-size: small;
+}
+
+@media (min-width: 768px) {
+  .col-md-4 {
+    max-width: 32.333333%;
+  }
+}
+/*# sourceMappingURL=style.css.map */
