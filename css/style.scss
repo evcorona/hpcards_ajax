@@ -8,3 +8,24 @@
         max-width: 32.333333%;
     }
 }
+
+.cherry{
+    height: 500px;
+}
+
+.cherry-background{
+    background-image: url(images/books.jpg);
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+}
+
+.card {    
+        background-color: rgba(54, 51, 51, 0.534);
+}
+
+nav{
+    :hover{
+        background-image: url(images/black.jpg);
+    }
+}

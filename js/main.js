@@ -1,66 +1,46 @@
-/* koders endpoint = https://ajaxclass-1ca34.firebaseio.com/koders/.json */
-const printKoders = koders => {
-  /*
-      {
-          koder1:{
-              name:"",
-              lastName:""
-          }
-      }
-  */
-  let dataTable = document.getElementById("koders-table")
-  dataTable.innerHTML = ""
-  for( koder in koders ){
-      let koderObject = koders[koder]
-      let { name, lastName } = koderObject
-      let dataTable = document.getElementById("koders-table")
-      currentContent = dataTable.innerHTML
-      let newContent = `
-              <tr>
-                  <td>${name}</td>
-                  <td>${lastName}</td>
-              </tr>
-          `
-      dataTable.innerHTML = currentContent + newContent
-  }
-}
-const getKoderData = () => {
-  console.log("getKoderData")
-  let name = document.getElementById("name").value
-  let lastName = document.getElementById("last-name").value
-  let koderObject = { name, lastName }
-  saveKoder( koderObject )
-}
-document.getElementById("save-button").addEventListener("click", getKoderData )
-/* GET */
-const getKoders = () => {
+
+const getJson = () => {
+  let theURL = "http://hp-api.herokuapp.com/api/characters";
   let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-         // Typical action to be performed when the document is ready:
-         //xhttp.responseText;
-         let response = JSON.parse(xhttp.response);
-         console.log(response)
-         printKoders( response )
-      }
+  let response
+  xhttp.onreadystatechange = function(){
+    if(this.readyState == 4 && this.status == 200){
+      response = JSON.parse(xhttp.response);
+      console.log(response)
+      fillData(response,card,properties)
+    }
   };
-  xhttp.open("GET", "https://ajaxclass-1ca34.firebaseio.com/koders/.json ",true);
+  xhttp.open("GET",theURL,true);
   xhttp.send();
 }
-/*----*/
-/* POST */
-const saveKoder = koder => {
-  let xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function() {
-      if (this.readyState == 4 && this.status == 200) {
-         // Typical action to be performed when the document is ready:
-         //xhttp.responseText;
-         let response = JSON.parse(xhttp.response);
-         console.log(response)
-         getKoders()
-      }
-  };
-  xhttp.open("POST", "https://ajaxclass-1ca34.firebaseio.com/koders/.json ",true);
-  xhttp.send( JSON.stringify( koder ) );
+
+var titles = ["image","Name:","House:","Ancestry:","Date of Birth:"]
+
+var card = `
+<div class="card p-2 m-1 text-white border-0 col-12 col-md-4 col-lg-4 mt-3 shadow rounded">
+  <div class="cherry card-body d-flex align-items-center">  
+    <img src="imagen" class="card-img-top w-100 h-100 img-fluid rounded" alt="...">
+  </div>
+      <div class="card-body">
+        <h5 class="card-title">{data1}</h5>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item bg-transparent text-white">${titles[2]} {data2}</li>
+        <li class="list-group-item bg-transparent text-white">${titles[3]} {data3}</li>
+        <li class="list-group-item bg-transparent text-white">${titles[4]} <b>{data4}</b></li>
+      </ul>
+</div>`
+
+var properties = ["image","name","house","ancestry","dateOfBirth"]
+
+const fillData = (BDdata,html,key) => {
+  console.log(BDdata)
+  BDdata.forEach( data => { 
+    currentContent = document.getElementById("card").innerHTML
+    let newCard = html.replace("imagen",data[key[0]]).replace("{data1}",data[key[1]]).replace("{data2}",data[key[2]]).replace("{data3}",data[key[3]]).replace("{data4}",data[key[4]])
+    newContent = currentContent + newCard
+    document.getElementById("card").innerHTML = newContent
+  })
 }
-/*----*/
+
+getJson()
