@@ -1,6 +1,6 @@
 
 const getJson = () => {
-  let theURL = "http://hp-api.herokuapp.com/api/characters";
+  let theURL = "https://hp-api.herokuapp.com/api/characters";
   let xhttp = new XMLHttpRequest();
   let response
   xhttp.onreadystatechange = function(){
